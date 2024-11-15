@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react'
 
-import FaceTracking from './Videofeed'
+import VideoFeed from './Components/VideoFeed/Videofeed'
 
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
 
   return (
     <>
-   <FaceTracking/>
+   <VideoFeed/>
     </>
   )
 }

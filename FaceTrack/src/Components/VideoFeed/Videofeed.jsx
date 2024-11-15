@@ -7,6 +7,7 @@ const FaceTracking = () => {
   const canvasRef = useRef(null);
   const [status, setStatus] = useState('Starting...');
   const [fps, setFps] = useState(0);
+  const [AssetURL, setAssetURL] = useState();
 
   useEffect(() => {
     let model = null;
@@ -66,7 +67,7 @@ const FaceTracking = () => {
           {
             runtime: 'tfjs',
             refineLandmarks: false,
-            maxFaces: 1,
+            maxFaces: 3,
             // Adjust model parameters for better detection
             scoreThreshold: 0.5,
             iouThreshold: 0.3
@@ -119,22 +120,22 @@ const FaceTracking = () => {
         ctx.fillText(`Faces: ${faces.length}`, 10, 40);
 
         // Guide rectangle
-        ctx.strokeStyle = 'lime';
-        ctx.lineWidth = 2;
-        ctx.strokeRect(160, 120, 320, 240);
+        // ctx.strokeStyle = 'lime';
+        // ctx.lineWidth = 2;
+        // ctx.strokeRect(160, 120, 320, 240);
 
         if (faces.length > 0) {
           faces.forEach(face => {
             // Draw bounding box
-            const box = face.box;
-            ctx.strokeStyle = '#00ff00';
-            ctx.lineWidth = 2;
-            ctx.strokeRect(
-              canvasRef.current.width - box.xMin - box.width,
-              box.yMin,
-              box.width,
-              box.height
-            );
+            // const box = face.box;
+            // ctx.strokeStyle = '#00ff00';
+            // ctx.lineWidth = 2;
+            // ctx.strokeRect(
+            //   canvasRef.current.width - box.xMin - box.width,
+            //   box.yMin,
+            //   box.width,
+            //   box.height
+            // );
 
             // Draw landmarks with larger, more visible points
             face.keypoints.forEach(point => {
@@ -186,6 +187,7 @@ const FaceTracking = () => {
   }, []);
 
   return (
+    
     <div className="relative">
       <div style={{ position: 'relative', width: '640px', height: '480px', backgroundColor: 'black' }}>
         <video
