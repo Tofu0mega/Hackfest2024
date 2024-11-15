@@ -20,8 +20,8 @@ const FaceTracking = () => {
         setStatus('Requesting camera access...');
         const stream = await navigator.mediaDevices.getUserMedia({
           video: {
-            width: { ideal: 640 },
-            height: { ideal: 480 },
+            width: { ideal: 1280 },
+            height: { ideal: 960 },
             facingMode: 'user',
             frameRate: { ideal: 30 }
           },
@@ -38,8 +38,8 @@ const FaceTracking = () => {
           });
 
           // Set video properties explicitly
-          videoRef.current.width = 640;
-          videoRef.current.height = 480;
+          videoRef.current.width = 1280;
+          videoRef.current.height = 960;
           
           await videoRef.current.play();
           setStatus('Camera ready');
@@ -189,7 +189,7 @@ const FaceTracking = () => {
   return (
     
     <div className="relative">
-      <div style={{ position: 'relative', width: '640px', height: '480px', backgroundColor: 'black' }}>
+      <div style={{ position: 'relative', width: '1280px', height: '960px', backgroundColor: 'black' }}>
         <video
           ref={videoRef}
           style={{
@@ -203,8 +203,8 @@ const FaceTracking = () => {
         />
         <canvas
           ref={canvasRef}
-          width={640}
-          height={480}
+          width={1280}
+          height={960}
           style={{
             position: 'absolute',
             width: '100%',
@@ -213,17 +213,7 @@ const FaceTracking = () => {
           }}
         />
       </div>
-      <div className="mt-4 p-2 bg-gray-100 rounded">
-        <p><strong>Status:</strong> {status}</p>
-        <p><strong>FPS:</strong> {fps}</p>
-        <p><strong>Tips:</strong></p>
-        <ul className="list-disc ml-5">
-          <li>Position your face within the green rectangle</li>
-          <li>Ensure good lighting</li>
-          <li>Keep your face relatively still at first</li>
-          <li>Try to be about arm's length from the camera</li>
-        </ul>
-      </div>
+     
     </div>
   );
 };
