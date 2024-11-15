@@ -67,7 +67,7 @@ const FaceTracking = () => {
           {
             runtime: "tfjs",
             refineLandmarks: true,
-            maxFaces: 4,
+            maxFaces: 1,
             // Adjust model parameters for better detection
             scoreThreshold: 0.5,
             iouThreshold: 0.3,
