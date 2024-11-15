@@ -2,14 +2,25 @@ import React, { useEffect, useRef, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as faceLandmarksDetection from "@tensorflow-models/face-landmarks-detection";
 
+// Global variables for head-turn detection
+let isTurningLeft = false;
+let isTurningRight = false;
+
+// Global functions to check head-turn state
+function isLeft() {
+  return isTurningLeft;
+}
+
+function isRight() {
+  return isTurningRight;
+}
+
 const FaceTracking = () => {
+  const [AssetURL, setAssetURL] = useState("https://res.cloudinary.com/dtauaal8p/image/upload/v1731693799/5AM/png-transparent-gold-love-earring-love-knot-stud-earrings-in-18k-gold-jewellery-pendant-diamond-colored-gold-metal-thumbnail_mhwevi.png");
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [status, setStatus] = useState("Starting...");
   const [fps, setFps] = useState(0);
-  const [AssetURL, setAssetURL] = useState(
-    'https://res.cloudinary.com/dtauaal8p/image/upload/v1731693799/5AM/png-transparent-gold-love-earring-love-knot-stud-earrings-in-18k-gold-jewellery-pendant-diamond-colored-gold-metal-thumbnail_mhwevi.png'
-  );
 
   useEffect(() => {
     let model = null;
@@ -32,17 +43,13 @@ const FaceTracking = () => {
 
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
-
           await new Promise((resolve) => {
             videoRef.current.onloadedmetadata = () => {
               resolve();
             };
           });
-
-          // Set video properties explicitly
           videoRef.current.width = 1280;
           videoRef.current.height = 960;
-
           await videoRef.current.play();
           setStatus("Camera ready");
           return true;
@@ -59,7 +66,6 @@ const FaceTracking = () => {
       try {
         setStatus("Loading TensorFlow.js...");
         await tf.ready();
-        // Enable WebGL backend
         await tf.setBackend("webgl");
         console.log("Using backend:", tf.getBackend());
 
@@ -70,9 +76,7 @@ const FaceTracking = () => {
             runtime: "tfjs",
             refineLandmarks: true,
             maxFaces: 1,
-            // Adjust model parameters for better detection
             scoreThreshold: 0.5,
-            iouThreshold: 0.3,
           }
         );
         setStatus("Model loaded");
@@ -94,83 +98,114 @@ const FaceTracking = () => {
     };
 
     const detectFaces = async (timestamp) => {
-      if (!model || !videoRef.current || !canvasRef.current || !AssetURL) return;
+      if (!model || !videoRef.current || !canvasRef.current) return;
     
       try {
         updateFPS(timestamp);
     
-        // Create tensor from video element
         const faces = await model.estimateFaces(videoRef.current, {
           flipHorizontal: false,
-          staticImageMode: false
+          staticImageMode: false,
         });
     
-        const ctx = canvasRef.current.getContext('2d');
+        const ctx = canvasRef.current.getContext("2d");
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
     
-        // Draw normal video (on first canvas)
-        ctx.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
+        ctx.save();
+        ctx.scale(-1, 1);
+        ctx.translate(-canvasRef.current.width, 0);
+        ctx.drawImage(videoRef.current, 0, 0);
+        ctx.restore();
     
-        // Draw debug info
-        ctx.fillStyle = 'white';
-        ctx.font = '16px Arial';
+        ctx.fillStyle = "white";
+        ctx.font = "16px Arial";
         ctx.fillText(`FPS: ${fps}`, 10, 20);
         ctx.fillText(`Faces: ${faces.length}`, 10, 40);
     
         if (faces.length > 0) {
-          faces.forEach(face => {
-            // Define indices for ear keypoints
-            const leftEarIndex = 234; // Left ear index from the MediaPipe face mesh model
-            const rightEarIndex = 454; // Right ear index from the MediaPipe face mesh model
-
-            // Extract keypoints for ears
-            const leftEar = face.keypoints[leftEarIndex];
-            const rightEar = face.keypoints[rightEarIndex];
-
-            console.log("Left Ear Position: ", leftEar);  // Debugging ear positions
-            console.log("Right Ear Position: ", rightEar);  // Debugging ear positions
+          faces.forEach((face) => {
+            const leftEye = face.keypoints[33];
+            const rightEye = face.keypoints[263];
+            const nose = face.keypoints[1];
     
-            // Calculate earring dimensions based on detected ear positions
-            const earringWidth = 500; // Adjust this as per desired earring size
-            const earringHeight = 500; // Adjust this as per desired earring size
-
-            // Ensure image URL is correctly loaded
-            const image = new Image();
-            image.src = AssetURL;
-            image.onload = () => {
-              console.log("Image loaded successfully!");  // Debugging image load
-
-              // Check if the ear positions are valid before drawing
-              if (leftEar && rightEar) {
-                // Draw earring on the left ear
-                ctx.save();
-                ctx.translate(leftEar.x * canvasRef.current.width - earringWidth * canvasRef.current.width / 2, leftEar.y * canvasRef.current.height - earringHeight * canvasRef.current.height / 2);
-                ctx.drawImage(image, 0, 0, earringWidth * canvasRef.current.width, earringHeight * canvasRef.current.height);
-                ctx.restore();
-
-                // Draw earring on the right ear
-                ctx.save();
-                ctx.translate(rightEar.x * canvasRef.current.width - earringWidth * canvasRef.current.width / 2, rightEar.y * canvasRef.current.height - earringHeight * canvasRef.current.height / 2);
-                ctx.drawImage(image, 0, 0, earringWidth * canvasRef.current.width, earringHeight * canvasRef.current.height);
-                ctx.restore();
+            if (leftEye && rightEye && nose) {
+              const eyeMidX = (leftEye.x + rightEye.x) / 2;
+    
+              // Update global head-turn states
+              isTurningLeft = nose.x > eyeMidX + 10; // Adjust offset as needed
+              isTurningRight = nose.x < eyeMidX - 10; // Adjust offset as needed
+    
+              if (isTurningLeft) {
+                ctx.fillText("Turning Left", 10, 60);
+              } else if (isTurningRight) {
+                ctx.fillText("Turning Right", 10, 60);
+              } else {
+                ctx.fillText("Facing Forward", 10, 60);
               }
-            };
-            image.onerror = () => {
-              console.error("Image failed to load"); // Error handling for image loading
-            };
-
-            setStatus(`Face detected! Tracking ${faces.length} face(s)`);
+            }
+    
+            const leftCheekIndex = 234; // Example index near left cheek
+            const rightCheekIndex = 454; // Example index near right cheek
+    
+            const leftCheek = face.keypoints[leftCheekIndex];
+            const rightCheek = face.keypoints[rightCheekIndex];
+            let xOffset;
+            let yOffset;
+            if (leftCheek && rightCheek) {
+              // Calculate estimated ear positions
+              if (!isTurningLeft && !isTurningRight) {
+                xOffset = 30; // Distance from cheekbone (adjust as necessary)
+                yOffset = 60;
+              } else if (isTurningLeft) {
+                xOffset = 30; // Distance from cheekbone (adjust as necessary)
+                yOffset = 70;
+              } else {
+                xOffset = 30;
+                yOffset = 70;
+              }
+    
+              let Ear;
+              if (isTurningLeft) {
+                Ear = {
+                  x: leftCheek.x - xOffset,
+                  y: leftCheek.y + yOffset,
+                };
+              } else {
+                Ear = {
+                  x: rightCheek.x + xOffset,
+                  y: rightCheek.y + yOffset,
+                };
+              }
+    
+              // Draw the image at the ear location
+              if (AssetURL) {
+                const earImage = new Image();
+                earImage.src = AssetURL; // Set the source to the asset URL
+    
+                earImage.onload = () => {
+                  // Set the desired earring size (2x bigger than 20px, so 40px width)
+                  const earringWidth = 40; // Width of the earring (now 2x bigger)
+                  const earringHeight = (earImage.height / earImage.width) * earringWidth; // Maintain aspect ratio
+    
+                  // Draw the image at the calculated ear position with the new size
+                  ctx.drawImage(earImage, canvasRef.current.width - Ear.x - earringWidth / 2, Ear.y - earringHeight / 2, earringWidth, earringHeight);
+                };
+              }
+            }
           });
+    
+          setStatus(`Face detected! Tracking ${faces.length} face(s)`);
         } else {
-          setStatus('No faces detected - try moving within the frame');
+          setStatus("No faces detected - try moving within the view");
         }
     
         animationId = requestAnimationFrame(detectFaces);
       } catch (error) {
-        console.error('Detection error:', error);
+        console.error("Detection error:", error);
         setStatus(`Detection error: ${error.message}`);
       }
     };
+    
 
     const init = async () => {
       const cameraReady = await initCamera();
@@ -211,6 +246,7 @@ const FaceTracking = () => {
             width: "100%",
             height: "100%",
             objectFit: "cover",
+            transform: "scaleX(-1)", // Mirror the video
           }}
           playsInline
         />
@@ -231,5 +267,3 @@ const FaceTracking = () => {
 };
 
 export default FaceTracking;
-
-
