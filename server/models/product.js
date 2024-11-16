@@ -31,7 +31,7 @@ const productSchema= new Schema({
         
     },
     filterImage:{
-        type:[String],
+        type:String,
         
     },
    
