@@ -21,7 +21,7 @@ const Navbar = () => {
       <ul className={`nav-menu ${menuOpen ? "show" : ""}`}>
         <li>
           <Link to="/" onClick={() => setMenuOpen(false)}>
-            Virtual Changing Room
+            Try It Out
           </Link>
         </li>
         <li>

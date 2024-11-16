@@ -25,4 +25,14 @@
     row-gap:80px;
 
 }
-  
+
+.try-Category {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+    background-color: #efeeee;
+    padding: 20px;
+}
+
