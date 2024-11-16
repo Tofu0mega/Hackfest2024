@@ -5,9 +5,9 @@ import User from "../models/user.js"
 
 export async function create(req,res){
     try {
-        const {itemName,itemType,itemSize,itemPrice,stockQuantity,displayImage}=req.body
+        const {itemName,itemType,itemSize,itemPrice,stockQuantity,displayImage,itemDescription}=req.body
         const displayImageURL=await uploadImage(displayImage)
-        const newProduct= await Product.create({itemName:itemName,itemType:itemType,itemSize:itemSize,itemPrice:itemPrice,stockQuantity:stockQuantity,displayImage:displayImageURL,filterImage:displayImageURL})
+        const newProduct= await Product.create({itemName:itemName,itemType:itemType,itemSize:itemSize,itemPrice:itemPrice,stockQuantity:stockQuantity,displayImage:displayImageURL,filterImage:displayImageURL,itemDescription:itemDescription})
 
 
 

@@ -10,6 +10,10 @@ const productSchema= new Schema({
         type:String,
         required:true
     },
+    itemDescription:{
+        type:String,
+        required:true
+    },
     itemSize:{
         type:String,
         required:true
@@ -24,11 +28,11 @@ const productSchema= new Schema({
     },
     displayImage:{
         type:String,
-        required:true
+        
     },
     filterImage:{
         type:[String],
-        required:true
+        
     },
    
 },{timestamps:true,versionKey:false})
