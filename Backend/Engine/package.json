@@ -1,7 +1,0 @@
-{
-  "dependencies": {
-    "@zappar/zappar": "^2.2.7",
-    "@zappar/zappar-react-three-fiber": "^2.5.2",
-    "three.js": "^0.77.0"
-  }
-}
