@@ -4,39 +4,44 @@ import cartIcon from "../assets/Frontend_Assets/cart_icon.png";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [menu, setMenu] = useState(""); // Track active menu
+  const [menuOpen, setMenuOpen] = useState(false); // Track hamburger menu state
 
   return (
     <div className="navbar">
-      <p>VIRTUAL CHANGING ROOM</p>
+      {/* Hamburger Menu */}
+      <button
+        className="hamburger"
+        onClick={() => setMenuOpen((prev) => !prev)}
+        aria-label="Toggle Menu"
+      >
+        ☰
+      </button>
 
-      <ul className="nav-menu">
-        <li
-          className={menu === "try" ? "active" : ""}
-          onClick={() => setMenu("try")}
-        >
-          <Link to="/">virtualChangingRoom</Link>
+      {/* Navigation Menu */}
+      <ul className={`nav-menu ${menuOpen ? "show" : ""}`}>
+        <li>
+          <Link to="/virtualChangingRoom" onClick={() => setMenuOpen(false)}>
+            Virtual Changing Room
+          </Link>
         </li>
-        <li
-          className={menu === "Sunglasses" ? "active" : ""}
-          onClick={() => setMenu("Sunglasses")}
-        >
-          <Link to="/Sunglasses">Sunglasses</Link>
+        <li>
+          <Link to="/Sunglasses" onClick={() => setMenuOpen(false)}>
+            Sunglasses
+          </Link>
         </li>
-        <li
-          className={menu === "Earrings" ? "active" : ""}
-          onClick={() => setMenu("Earrings")}
-        >
-          <Link to="/Earrings">Earrings</Link>
+        <li>
+          <Link to="/Earrings" onClick={() => setMenuOpen(false)}>
+            Earrings
+          </Link>
         </li>
-        <li
-          className={menu === "Necklace" ? "active" : ""}
-          onClick={() => setMenu("Necklace")}
-        >
-          <Link to="/Necklace">Necklace</Link>
+        <li>
+          <Link to="/Necklace" onClick={() => setMenuOpen(false)}>
+            Necklace
+          </Link>
         </li>
       </ul>
 
+      {/* Login and Cart Section */}
       <div className="nav-login-cart">
         <Link to="/login">
           <button>Login</button>
