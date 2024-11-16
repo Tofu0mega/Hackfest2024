@@ -80,16 +80,16 @@ const seedProducts = async () => {
       description: "Pearl Saturn Orbit Earrings are a unique fusion of elegance and modernity. Inspired by planetary orbits, these earrings feature a pearl drop accent suspended from a metallic ring. Their futuristic design makes them a standout accessory for special occasions or everyday wear. Lightweight and comfortable, they offer a sophisticated yet playful vibe. Ideal for gifting, these earrings are perfect for those who love celestial themes and chic styles. Their versatile appeal allows them to pair effortlessly with both formal and casual outfits, making them a must-have addition to any jewelry collection."
     },
    
-    {
-      itemName: "Vibrant Green Retro Glasses",
-      itemType: "Glasses",
-      itemSize: "Medium",
-      itemPrice: 29.99,
-      stockQuantity: 150,
-      displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glasses_zoymgq.png",
-      filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glasses_zoymgq.png",
-      description: "Bright and bold, these green retro Glasses feature a classic wayfarer design with tinted black lenses for UV protection. Lightweight and durable, they are perfect for making a statement at outdoor events or summer outings."
-    },
+    // {
+    //   itemName: "Vibrant Green Retro Glasses",
+    //   itemType: "Glasses",
+    //   itemSize: "Medium",
+    //   itemPrice: 29.99,
+    //   stockQuantity: 150,
+    //   displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glasses_zoymgq.png",
+    //   filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glasses_zoymgq.png",
+    //   description: "Bright and bold, these green retro Glasses feature a classic wayfarer design with tinted black lenses for UV protection. Lightweight and durable, they are perfect for making a statement at outdoor events or summer outings."
+    // },
     {
       itemName: "Classic Black Round Glasses",
       itemType: "Glasses",
@@ -140,16 +140,16 @@ const seedProducts = async () => {
       filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775878/5AM/Glasses/glass5_zfifyl.png",
       description: "Sophisticated and sturdy, these gold aviator Glasses feature polarized lenses for maximum sun protection. Designed for both style and practicality, they are perfect for everyday wear."
     },
-    {
-      itemName: "All-Black Wayfarer Glasses",
-      itemType: "Glasses",
-      itemSize: "Medium",
-      itemPrice: 24.99,
-      stockQuantity: 170,
-      displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glass1_rtypiw.png",
-      filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glass1_rtypiw.png",
-      description: "Simple yet timeless, these all-black wayfarer Glasses provide a sleek look. Comfortable and versatile, they are ideal for adding a subtle edge to any outfit."
-    },
+    // {
+    //   itemName: "All-Black Wayfarer Glasses",
+    //   itemType: "Glasses",
+    //   itemSize: "Medium",
+    //   itemPrice: 24.99,
+    //   stockQuantity: 170,
+    //   displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glass1_rtypiw.png",
+    //   filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glass1_rtypiw.png",
+    //   description: "Simple yet timeless, these all-black wayfarer Glasses provide a sleek look. Comfortable and versatile, they are ideal for adding a subtle edge to any outfit."
+    // },
     {
       itemName: "Minimalist Aviator Silhouette",
       itemType: "Glasses",
