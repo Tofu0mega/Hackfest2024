@@ -2,11 +2,15 @@ import React from 'react'
 import Hero from '../Components/Hero/Hero.jsx'
 import Popular from '../Components/Popular/Popular.jsx'
 import Collection from '../Components/Collection/Collection.jsx'
+import DisplayCard from '../Components/DisplayCards/DisplayCards.jsx'
 
-const virtualChangingRoom = () => {
+const VirtualChangingRoom = () => {
   return (
     // <div>
-        <Hero/>
+    <>
+        {/* <Hero/> */}
+        <DisplayCard/>
+    </>
     //     <Popular/>
     //     <Collection/>
     //     </div>
@@ -14,4 +18,4 @@ const virtualChangingRoom = () => {
   )
 }
 
-export default virtualChangingRoom;
+export default VirtualChangingRoom;

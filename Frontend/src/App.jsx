@@ -1,7 +1,7 @@
 
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import {BrowserRouter,Routes,Route} from "react-router-dom";
-import virtualChangingRoom from "./Pages/virtualChangingRoom.jsx";
+import VirtualChangingRoom from "./Pages/virtualChangingRoom.jsx";
 import ShopCategory from "./Pages/TryCategory";
 import Product from "./Pages/Product";
 import Cart from "./Pages/Cart";
@@ -21,7 +21,7 @@ function App() {
       <BrowserRouter>
       <Navbar/>
       <Routes>
-        <Route path="/" element={<virtualChangingRoom/>}/>
+        <Route path="/" element={<VirtualChangingRoom/>}/>
         <Route path="/Sunglasses" element={<ShopCategory banner={sunglass_banner} category="Sunglasses" />}/>
         <Route path="/Earrings" element={<ShopCategory banner={earrings_banner} category="Earrings"/>}/>
         <Route path="/Necklace" element={<ShopCategory banner={necklace_banner} category="Necklace"/>}/>
