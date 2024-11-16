@@ -81,14 +81,14 @@ const seedProducts = async () => {
     },
    
     {
-      itemName: "Vibrant Green Retro Sunglasses",
-      itemType: "Sunglasses",
+      itemName: "Vibrant Green Retro Glasses",
+      itemType: "Glasses",
       itemSize: "Medium",
       itemPrice: 29.99,
       stockQuantity: 150,
       displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glasses_zoymgq.png",
       filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glasses_zoymgq.png",
-      description: "Bright and bold, these green retro sunglasses feature a classic wayfarer design with tinted black lenses for UV protection. Lightweight and durable, they are perfect for making a statement at outdoor events or summer outings."
+      description: "Bright and bold, these green retro Glasses feature a classic wayfarer design with tinted black lenses for UV protection. Lightweight and durable, they are perfect for making a statement at outdoor events or summer outings."
     },
     {
       itemName: "Classic Black Round Glasses",
@@ -101,64 +101,64 @@ const seedProducts = async () => {
       description: "Timeless and sophisticated, these black round glasses are a versatile accessory for both casual and professional settings. Their lightweight frame ensures comfort for extended wear, blending elegance with practicality."
     },
     {
-      itemName: "Sleek Aviator Sunglasses",
-      itemType: "Sunglasses",
+      itemName: "Sleek Aviator Glasses",
+      itemType: "Glasses",
       itemSize: "Large",
       itemPrice: 49.99,
       stockQuantity: 100,
       displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775876/5AM/Glasses/glass2_ggydbm.png",
       filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775876/5AM/Glasses/glass2_ggydbm.png",
-      description: "Stylish and iconic, these silver aviator sunglasses come with reflective lenses and a lightweight metal frame. Ideal for sunny days, they offer both fashion and functionality, making them a must-have accessory."
+      description: "Stylish and iconic, these silver aviator Glasses come with reflective lenses and a lightweight metal frame. Ideal for sunny days, they offer both fashion and functionality, making them a must-have accessory."
     },
     {
-      itemName: "Chic Gradient Sunglasses",
-      itemType: "Sunglasses",
+      itemName: "Chic Gradient Glasses",
+      itemType: "Glasses",
       itemSize: "Medium",
       itemPrice: 39.99,
       stockQuantity: 120,
       displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775876/5AM/Glasses/glass3_jvvuxw.png",
       filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775876/5AM/Glasses/glass3_jvvuxw.png",
-      description: "These chic sunglasses feature a gradient lens with a glossy red and gold frame. Designed for modern elegance, they offer UV protection while enhancing your style for casual or formal outings."
+      description: "These chic Glasses feature a gradient lens with a glossy red and gold frame. Designed for modern elegance, they offer UV protection while enhancing your style for casual or formal outings."
     },
     {
-      itemName: "Cool Blue Mirror Sunglasses",
-      itemType: "Sunglasses",
+      itemName: "Cool Blue Mirror Glasses",
+      itemType: "Glasses",
       itemSize: "Medium",
       itemPrice: 34.99,
       stockQuantity: 140,
       displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775877/5AM/Glasses/glass4_sks3iv.png",
       filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775877/5AM/Glasses/glass4_sks3iv.png",
-      description: "Bold and trendy, these blue mirror sunglasses feature a sleek black frame. Perfect for outdoor adventures, they provide both comfort and a reflective shield from the sun."
+      description: "Bold and trendy, these blue mirror Glasses feature a sleek black frame. Perfect for outdoor adventures, they provide both comfort and a reflective shield from the sun."
     },
     {
       itemName: "Gold Classic Aviators",
-      itemType: "Sunglasses",
+      itemType: "Glasses",
       itemSize: "Large",
       itemPrice: 59.99,
       stockQuantity: 80,
       displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775878/5AM/Glasses/glass5_zfifyl.png",
       filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775878/5AM/Glasses/glass5_zfifyl.png",
-      description: "Sophisticated and sturdy, these gold aviator sunglasses feature polarized lenses for maximum sun protection. Designed for both style and practicality, they are perfect for everyday wear."
+      description: "Sophisticated and sturdy, these gold aviator Glasses feature polarized lenses for maximum sun protection. Designed for both style and practicality, they are perfect for everyday wear."
     },
     {
-      itemName: "All-Black Wayfarer Sunglasses",
-      itemType: "Sunglasses",
+      itemName: "All-Black Wayfarer Glasses",
+      itemType: "Glasses",
       itemSize: "Medium",
       itemPrice: 24.99,
       stockQuantity: 170,
       displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glass1_rtypiw.png",
       filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glass1_rtypiw.png",
-      description: "Simple yet timeless, these all-black wayfarer sunglasses provide a sleek look. Comfortable and versatile, they are ideal for adding a subtle edge to any outfit."
+      description: "Simple yet timeless, these all-black wayfarer Glasses provide a sleek look. Comfortable and versatile, they are ideal for adding a subtle edge to any outfit."
     },
     {
       itemName: "Minimalist Aviator Silhouette",
-      itemType: "Sunglasses",
+      itemType: "Glasses",
       itemSize: "Large",
       itemPrice: 44.99,
       stockQuantity: 90,
       displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glass7_o6jguy.png",
       filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731775875/5AM/Glasses/glass7_o6jguy.png",
-      description: "A bold silhouette for everyday style, these minimalist aviator sunglasses feature a clean black design. Lightweight and durable, they’re a go-to choice for any occasion."
+      description: "A bold silhouette for everyday style, these minimalist aviator Glasses feature a clean black design. Lightweight and durable, they’re a go-to choice for any occasion."
     },
     {
       itemName: "Regal Gold Temple Necklace",

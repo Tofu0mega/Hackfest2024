@@ -13,7 +13,7 @@ const Navbar = () => {
     
         <ul className="nav-menu">
             <li onClick={()=>{setMenu("try")}}><Link to='/'>Try</Link>{menu==="Try"?<hr/>:<></>}</li>
-            <li onClick={()=>{setMenu("Sunglasses")}}><Link to='/Sunglasses'>Sunglasses</Link>{menu==="Sunglasses"?<hr/>:<></>}</li>
+            <li onClick={()=>{setMenu("Glasses")}}><Link to='/Glasses'>Glasses</Link>{menu==="Glasses"?<hr/>:<></>}</li>
             <li onClick={()=>{setMenu("Earrings")}}><Link to='/Earrings'>Earrings</Link>{menu==="Earrings"?<hr/>:<></>}</li>
             <li onClick={()=>{setMenu("Necklace")}}><Link to='/Necklace'>Necklace</Link>{menu==="Necklace"?<hr/>:<></>}</li>
 

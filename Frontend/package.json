@@ -14,6 +14,10 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@mediapipe/camera_utils": "^0.3.1675466862",
+    "@mediapipe/face_mesh": "^0.4.1633559619",
+    "@tensorflow-models/face-landmarks-detection": "^1.0.6",
+    "@tensorflow/tfjs": "^4.22.0",
     "lucide-react": "^0.459.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
