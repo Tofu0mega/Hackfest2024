@@ -8,13 +8,13 @@ const Hero = () => {
   return (
     <div className='hero'>
         <div className="hero-left">
-            <h2>New Arrivals</h2>
+            {/* <h2>New Arrivals</h2>
             <div className="hand-hand-icon">
-                <p>new</p>
+                <p>new</p> */}
                 <img src={handIcon} alt="handIcon" style={{ width: '40px', height: '40px', objectFit: 'cover' }} />
-            </div>
-            <p>Collection </p>
-            <p>for everyone</p>
+            {/* </div> */}
+            {/* <p>Collection </p>
+            <p>for everyone</p> */}
 
         <div className="hero-latest-btn">
             <div className="Latest collection"></div>
