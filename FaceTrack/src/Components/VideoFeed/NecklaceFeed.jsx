@@ -2,25 +2,14 @@ import React, { useEffect, useRef, useState } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as faceLandmarksDetection from "@tensorflow-models/face-landmarks-detection";
 
-// Global variables for head-turn detection
-let isTurningLeft = false;
-let isTurningRight = false;
-
-// Global functions to check head-turn state
-function isLeft() {
-  return isTurningLeft;
-}
-
-function isRight() {
-  return isTurningRight;
-}
-
 const FaceTracking = () => {
-  const [AssetURL, setAssetURL] = useState("https://res.cloudinary.com/dtauaal8p/image/upload/v1731693799/5AM/png-transparent-gold-love-earring-love-knot-stud-earrings-in-18k-gold-jewellery-pendant-diamond-colored-gold-metal-thumbnail_mhwevi.png");
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [status, setStatus] = useState("Starting...");
   const [fps, setFps] = useState(0);
+  const [AssetURL, setAssetURL] = useState(
+    'https://w7.pngwing.com/pngs/498/616/png-transparent-gold-colored-chunky-necklace-jewellery-gold-necklace-pendant-gold-necklace-queen-gemstone-leave-the-material-ring-thumbnail.png'
+  ); // Necklace Image URL
 
   useEffect(() => {
     let model = null;
@@ -97,115 +86,98 @@ const FaceTracking = () => {
       }
     };
 
+    const drawNecklace = (ctx, chin, leftJaw, rightJaw) => {
+      // Calculate the midpoint of the jawline
+      const midPoint = {
+        x: (leftJaw.x + rightJaw.x) / 2,
+        y: (leftJaw.y + rightJaw.y) / 2,
+      };
+
+      // Calculate the distance between the jaw points (width of the neck)
+      const neckWidth = Math.abs(leftJaw.x - rightJaw.x);
+      const scale = neckWidth / 200; // Scale based on neck width, adjust the denominator for better size
+
+      // Adjust the vertical offset to position the necklace closer to the neck
+      const neckY = chin.y + 60; // Lower value moves the necklace closer
+
+      const image = new Image();
+      image.src = AssetURL;
+
+      // Wait for the image to load
+      image.onload = () => {
+        // Draw the necklace at the correct position, scaled and rotated
+        ctx.save();
+        
+        // Translate the context to the midpoint of the jawline
+        ctx.translate(midPoint.x, neckY);
+        
+        // Rotate the necklace based on the angle between the left and right jaw
+        const angle = Math.atan2(rightJaw.y - leftJaw.y, rightJaw.x - leftJaw.x);
+        ctx.rotate(angle); 
+
+        // Apply scaling based on the neck width
+        ctx.scale(scale, scale);
+
+        // Draw the necklace, centered on the midpoint
+        ctx.drawImage(image, -image.width / 2, -image.height / 2);
+
+        // Restore the context to its original state
+        ctx.restore();
+      };
+    };
+
     const detectFaces = async (timestamp) => {
       if (!model || !videoRef.current || !canvasRef.current) return;
-    
+
       try {
         updateFPS(timestamp);
-    
+
         const faces = await model.estimateFaces(videoRef.current, {
           flipHorizontal: false,
           staticImageMode: false,
         });
-    
+
         const ctx = canvasRef.current.getContext("2d");
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    
+
         ctx.save();
-        ctx.scale(-1, 1);
+        ctx.scale(-1, 1); // Flip horizontally to mirror video
         ctx.translate(-canvasRef.current.width, 0);
         ctx.drawImage(videoRef.current, 0, 0);
         ctx.restore();
-    
+
         ctx.fillStyle = "white";
         ctx.font = "16px Arial";
-        ctx.fillText(`FPS: ${fps}, 10, 20`);
-        ctx.fillText(`Faces: ${faces.length}, 10, 40`);
-    
+        ctx.fillText(`FPS: ${fps}`, 10, 20);
+        ctx.fillText(`Faces: ${faces.length}`, 10, 40);
+
         if (faces.length > 0) {
           faces.forEach((face) => {
-            const leftEye = face.keypoints[33];
-            const rightEye = face.keypoints[263];
-            const nose = face.keypoints[1];
-    
-            if (leftEye && rightEye && nose) {
-              const eyeMidX = (leftEye.x + rightEye.x) / 2;
-    
-              // Update global head-turn states
-              isTurningLeft = nose.x > eyeMidX + 10; // Adjust offset as needed
-              isTurningRight = nose.x < eyeMidX - 10; // Adjust offset as needed
-    
-              if (isTurningLeft) {
-                ctx.fillText("Turning Left", 10, 60);
-              } else if (isTurningRight) {
-                ctx.fillText("Turning Right", 10, 60);
-              } else {
-                ctx.fillText("Facing Forward", 10, 60);
-              }
+            const chinIndex = 152;
+            const leftJawIndex = 234;
+            const rightJawIndex = 454;
+
+            const chin = face.keypoints[chinIndex];
+            const leftJaw = face.keypoints[leftJawIndex];
+            const rightJaw = face.keypoints[rightJawIndex];
+
+            if (chin && leftJaw && rightJaw) {
+              // Draw the necklace
+              drawNecklace(ctx, chin, leftJaw, rightJaw);
             }
-    
-            const leftCheekIndex = 234; // Example index near left cheek
-            const rightCheekIndex = 454; // Example index near right cheek
-    
-            const leftCheek = face.keypoints[leftCheekIndex];
-            const rightCheek = face.keypoints[rightCheekIndex];
-            let xOffset;
-            let yOffset;
-            if (leftCheek && rightCheek) {
-              // Calculate estimated ear positions
-              if (!isTurningLeft && !isTurningRight) {
-                xOffset = 30; // Distance from cheekbone (adjust as necessary)
-                yOffset = 60;
-              } else if (isTurningLeft) {
-                xOffset = 30; // Distance from cheekbone (adjust as necessary)
-                yOffset = 70;
-              } else {
-                xOffset = 30;
-                yOffset = 70;
-              }
-    
-              let Ear;
-              if (isTurningLeft) {
-                Ear = {
-                  x: leftCheek.x - xOffset,
-                  y: leftCheek.y + yOffset,
-                };
-              } else {
-                Ear = {
-                  x: rightCheek.x + xOffset,
-                  y: rightCheek.y + yOffset,
-                };
-              }
-    
-              // Draw the image at the ear location
-              if (AssetURL) {
-                const earImage = new Image();
-                earImage.src = AssetURL; // Set the source to the asset URL
-    
-                earImage.onload = () => {
-                  // Set the desired earring size (2x bigger than 20px, so 40px width)
-                  const earringWidth = 40; // Width of the earring (now 2x bigger)
-                  const earringHeight = (earImage.height / earImage.width) * earringWidth; // Maintain aspect ratio
-    
-                  // Draw the image at the calculated ear position with the new size
-                  ctx.drawImage(earImage, canvasRef.current.width - Ear.x - earringWidth / 2, Ear.y - earringHeight / 2, earringWidth, earringHeight);
-                };
-              }
-            }
+
+            setStatus(`Face detected! Tracking ${faces.length} face(s)`);
           });
-    
-          setStatus(`Face detected! Tracking ${faces.length} face(s)`);
         } else {
           setStatus("No faces detected - try moving within the view");
         }
-    
+
         animationId = requestAnimationFrame(detectFaces);
       } catch (error) {
         console.error("Detection error:", error);
         setStatus(`Detection error: ${error.message}`);
       }
     };
-    
 
     const init = async () => {
       const cameraReady = await initCamera();
@@ -227,7 +199,7 @@ const FaceTracking = () => {
         videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
       }
     };
-  }, []);
+  }, [AssetURL]);
 
   return (
     <div className="relative">
@@ -262,8 +234,20 @@ const FaceTracking = () => {
           }}
         />
       </div>
+      <div
+        style={{
+          position: "absolute",
+          top: "10px",
+          left: "10px",
+          color: "white",
+          fontSize: "18px",
+        }}
+      >
+        <p>{status}</p>
+      </div>
     </div>
   );
 };
 
 export default FaceTracking;
+
