@@ -10,6 +10,7 @@ import sunglass_banner from "../src/Components/assets/Frontend_Assets/Banner-Sun
 import earrings_banner from "../src/Components/assets/Frontend_Assets/Banner-Earrings.png"
 import necklace_banner from "../src/Components/assets/Frontend_Assets/Banner-Necklace.png"
 import LoginSignup from "./Pages/LoginSignup.jsx";
+import ProductListing from "./Product/product.jsx";
 
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
         <Route path="/login" element={<LoginSignup/>}/>
 
       </Routes>
+      <ProductListing/>
+    
       <Footer/>
       </BrowserRouter>
       
