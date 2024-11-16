@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 // Assuming you have a Product model already defined elsewhere
 const userSchema = new Schema({
-    name: {
+    userName: {
         type: String,
         required: true
     },
