@@ -1,11 +1,16 @@
-import { Schema, default as mongoose } from "mongoose"
-import Product, { find, findById, findByIdAndUpdate } from "../models/product"
+
+import Product from "../models/product.js"
+import { uploadImage } from "../middleware/uploadpng.js"
 
 export async function create(req,res){
     try {
-        const created=new Product(req.body)
-        await created.save()
-        res.status(201).json(created)
+        const {itemName,itemType,itemSize,itemPrice,stockQuantity,displayImage}=req.body
+        const displayImageURL=await uploadImage(displayImage)
+        const newProduct= await Product.create({itemName:itemName,itemType:itemType,itemSize:itemSize,itemPrice:itemPrice,stockQuantity:stockQuantity,displayImage:displayImageURL,filterImage:displayImageURL})
+
+
+
+        res.status(201).json("Product Created")
     } catch (error) {
         console.log(error);
         return res.status(500).json({message:'Error adding product, please trying again later'})
@@ -14,42 +19,9 @@ export async function create(req,res){
 
 export async function getAll(req, res) {
     try {
-        const filter={}
-        const sort={}
-        let skip=0
-        let limit=0
-
-        if(req.query.brand){
-            filter.brand={$in:req.query.brand}
-        }
-
-        if(req.query.category){
-            filter.category={$in:req.query.category}
-        }
-
-        if(req.query.user){
-            filter['isDeleted']=false
-        }
-
-        if(req.query.sort){
-            sort[req.query.sort]=req.query.order?req.query.order==='asc'?1:-1:1
-        }
-
-        if(req.query.page && req.query.limit){
-
-            const pageSize=req.query.limit
-            const page=req.query.page
-
-            skip=pageSize*(page-1)
-            limit=pageSize
-        }
-
-        const totalDocs=await find(filter).sort(sort).populate("brand").countDocuments().exec()
-        const results=await find(filter).sort(sort).populate("brand").skip(skip).limit(limit).exec()
-
-        res.set("X-Total-Count",totalDocs)
-
-        res.status(200).json(results)
+        const allProducts=await Product.find()
+        res.status(200).json(allProducts)
+       
     
     } catch (error) {
         console.log(error);
@@ -60,7 +32,7 @@ export async function getAll(req, res) {
 export async function getById(req,res){
     try {
         const {id}=req.params
-        const result=await findById(id).populate("brand").populate("category")
+        const result=await Product.findById(id).lean()
         res.status(200).json(result)
     } catch (error) {
         console.log(error);
@@ -68,36 +40,25 @@ export async function getById(req,res){
     }
 }
 
-export async function updateById(req,res){
+export async function getByType(req, res) {
     try {
-        const {id}=req.params
-        const updated=await findByIdAndUpdate(id,req.body,{new:true})
-        res.status(200).json(updated)
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({message:'Error updating product, please try again later'})
+        const type = req.params.type; // Retrieve the 'type' parameter from the request URL
+        const filteredProducts = await Product.find({ itemType: type }); // Assuming a 'type' field exists in the Product schema
+        res.status(200).json(filteredProducts);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "Something went wrong" });
     }
 }
 
-export async function undeleteById(req,res){
+export async function getByName(req, res) {
     try {
-        const {id}=req.params
-        const unDeleted=await findByIdAndUpdate(id,{isDeleted:false},{new:true}).populate('brand')
-        res.status(200).json(unDeleted)
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({message:'Error restoring product, please try again later'})
-    }
-}
-
-export async function deleteById(req,res){
-    try {
-        const {id}=req.params
-        const deleted=await findByIdAndUpdate(id,{isDeleted:true},{new:true}).populate("brand")
-        res.status(200).json(deleted)
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({message:'Error deleting product, please try again later'})
+        const name = req.query.name; // Assuming the name is passed as a query parameter
+        const filteredProducts = await Product.find({ name: new RegExp(name, 'i') }); // Case-insensitive search
+        res.status(200).json(filteredProducts);
+    } catch (e) {
+        console.log(e);
+        res.status(500).json({ message: "Something went wrong" });
     }
 }
 

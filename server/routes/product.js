@@ -1,14 +1,16 @@
 import express from 'express'
-import product from 'controllers/product.js'
-const productController=require("../controllers/Product")
+import * as product from '../controllers/product.js'
+
+
 const router=express.Router()
 
 router
-    .post("/",productController.create)
-    .get("/",productController.getAll)
-    .get("/:id",productController.getById)
-    .patch("/:id",productController.updateById)
-    .patch("/undelete/:id",productController.undeleteById)
-    .delete("/:id",productController.deleteById)
+    .post("/",product.create)
+    .get("/",product.getAll)
+    .get("/:id",product.getById)
+    .get("/searchbytype/:type",product.getByType)
+    .get("/searchbyname/:name",product.getByName)
+    
+   
 
-module.exports=router
+export default router
