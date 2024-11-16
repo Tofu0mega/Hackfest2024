@@ -19,6 +19,16 @@ const seedProducts = async () => {
         // Helper function to generate random numbers within a range
         const getRandomNumber = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
+        // Helper function to generate random gibberish descriptions
+        const generateRandomDescription = (length = 20) => {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ';
+            let description = '';
+            for (let i = 0; i < length; i++) {
+                description += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return description.trim();
+        };
+
         // Product data generation
         const types = ['Glassware', 'Necklace', 'Earring'];
         const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
@@ -32,7 +42,8 @@ const seedProducts = async () => {
                 itemPrice: parseFloat((getRandomNumber(5, 500) + Math.random()).toFixed(2)), // Random price between 5 and 500
                 stockQuantity: getRandomNumber(1, 100),
                 displayImage: `productImage${i}`,
-                filterImage: `filterImage${i}`
+                filterImage: `filterImage${i}`,
+                itemDescription: generateRandomDescription(50) // Generates a 50-character gibberish description
             };
             products.push(product);
         }
