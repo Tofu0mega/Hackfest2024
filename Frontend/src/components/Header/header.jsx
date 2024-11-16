@@ -1,12 +1,12 @@
 import "./header.css";
-import logo from ".../icons/Logo.jsx";
-import cart from ".../icons/IconCart.jsx";
-import avatar from ".../assets/image-avatar.png";
-import CartContext from ".../context/cart/CartContext.jsx";
+import logo from "../../icons/Logo.jsx";
+import cart from "../../icons/IconCart.jsx";
+// import avatar from "../../assets/image-avatar.png";
+import CartContext from "../../context/cart/CartContext.jsx";
 import { useContext, useState } from "react";
 import Cart from "../Cart/Cart.jsx";
-import fabars from ".../icons/IconmMenu.js";
-import close from ".../icons/IconClose.jsx";
+import fabars from "../../icons/IconMenu.jsx";
+import close from "../../icons/IconClose.jsx";
 
 function Header() {
   const { productState } = useContext(CartContext);

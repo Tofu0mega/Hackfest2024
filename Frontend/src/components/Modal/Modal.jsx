@@ -3,7 +3,7 @@ import "./modal.css";
 import images from "../../ProductImage";
 import next from "../../icons/IconNext.jsx";
 import previous from "../../icons/IconPrevious.jsx";
-import { IoClose } from "react-icons/io5";
+// import { IoClose } from "react-icons/io5";
 
 function ProductSlider({ setClick }) {
   const [current, setCurrent] = useState(0);
@@ -28,7 +28,7 @@ function ProductSlider({ setClick }) {
         <div className="modal_active">
           <div className="modal-wrapper">
             <img src={selected} alt="" className="selected"></img>
-            <IoClose className="close-modal" onClick={() => setClick(false)} />
+            {/* <IoClose className="close-modal" onClick={() => setClick(false)} /> */}
 
             <div className="thumbnails">
               {images.map((image, index) => (

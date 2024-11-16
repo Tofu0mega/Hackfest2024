@@ -1,21 +1,21 @@
 import "./App.css";
 import Header from "./components/Header/header";
-// import ProductSlider from "./components/ProductSlider";
-// import ProductDetail from "./components/ProductDetail";
-// import { CartProvider } from "./context/cart/CartContext";
+import ProductSlider from "./components/ProductSlider/ProductSlider.jsx";
+import ProductDetail from "./components/ProductDetail/ProductDetail.jsx";
+import { CartProvider } from "./context/cart/CartContext.jsx";
 
 function App() {
   return (
-    <Header/>
-    // <CartProvider>
-    //   <div className="container">
-    //     <Header />
-    //     <section className="wrapper">
-    //       <ProductSlider />
-    //       <ProductDetail />
-    //     </section>
-    //   </div>
-    // </CartProvider>
+    
+    <CartProvider>
+      <div className="container">
+        <Header />
+        <section className="wrapper">
+          <ProductSlider />
+          <ProductDetail />
+        </section>
+      </div>
+    </CartProvider>
   );
 }
 
