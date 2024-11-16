@@ -1,7 +1,7 @@
 
 import Navbar from "./Components/Navbar/Navbar.jsx";
 import {BrowserRouter,Routes,Route} from "react-router-dom";
-import virtualChangingRoom from "./Pages/virtualChangingRoom.jsx";
+import VirtualChangingRoom from "./Pages/virtualChangingRoom.jsx";
 import TryCategory from "./Pages/TryCategory";
 import Product from "./Pages/Product";
 import Cart from "./Pages/Cart";
@@ -11,6 +11,7 @@ import sunglass_banner from "../src/Components/assets/Frontend_Assets/Banner-Sun
 import earrings_banner from "../src/Components/assets/Frontend_Assets/Banner-Earrings.png"
 import necklace_banner from "../src/Components/assets/Frontend_Assets/Banner-Necklace.png"
 import LoginSignup from "./Pages/LoginSignup.jsx";
+import ProductListing from "./Product/product.jsx";
 
 
 function App() {
@@ -22,7 +23,7 @@ function App() {
       <BrowserRouter>
       <Navbar/>
       <Routes>
-        <Route path="/" element={<virtualChangingRoom/>}/>
+        <Route path="/" element={<VirtualChangingRoom/>}/>
         <Route path="/virtualChangingRoom" element={<TryCategory banner={homepage_banner} category="virtualChangingRoom" />}/>
         <Route path="/Sunglasses" element={<TryCategory banner={sunglass_banner} category="Sunglasses" />}/>
         <Route path="/Earrings" element={<TryCategory banner={earrings_banner} category="Earrings"/>}/>
@@ -35,6 +36,8 @@ function App() {
         <Route path="/login" element={<LoginSignup/>}/>
 
       </Routes>
+      <ProductListing/>
+    
       <Footer/>
       </BrowserRouter>
       

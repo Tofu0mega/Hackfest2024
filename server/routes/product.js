@@ -10,6 +10,8 @@ router
     .get("/:id",product.getById)
     .get("/searchbytype/:type",product.getByType)
     .get("/searchbyname/:name",product.getByName)
+    .post("/addtoCart",product.addToCart)
+    .post("/removeFromCart",product.removeFromCart)
     
    
 

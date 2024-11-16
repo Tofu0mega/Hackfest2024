@@ -1,7 +1,7 @@
 import express from 'express'
 import connectDB from './Configs/Database.js'
 
-import router from "./Routes.js"
+import router from "./routes.js"
 import cors from "cors"
 import ConnectCloud from './Configs/Cloudinary.js'
 
@@ -29,7 +29,7 @@ app.use(cors({
 }));
 
 //API creation
-app.use("",router)
+app.use(router)
 app.get("/",(req,res)=>{
     res.send("Express app running")
 })
