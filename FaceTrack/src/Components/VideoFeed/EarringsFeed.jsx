@@ -119,8 +119,8 @@ const FaceTracking = () => {
     
         ctx.fillStyle = "white";
         ctx.font = "16px Arial";
-        ctx.fillText(`FPS: ${fps}, 10, 20`);
-        ctx.fillText(`Faces: ${faces.length}, 10, 40`);
+        ctx.fillText(`FPS: ${fps}`, 10, 20);
+        ctx.fillText(`Faces: ${faces.length}`, 10, 40);
     
         if (faces.length > 0) {
           faces.forEach((face) => {
