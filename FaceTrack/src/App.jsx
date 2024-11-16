@@ -1,6 +1,8 @@
 import { useState,useEffect } from 'react'
 
-import VideoFeed from './Components/VideoFeed/Videofeed'
+// import VideoFeed from './Components/VideoFeed/Videofeed'
+// import FaceTracking from './Components/VideoFeed/NecklaceFeed'
+import FaceTracking from './Components/VideoFeed/NecklaceFeed'
 
 
 function App() {
@@ -9,7 +11,7 @@ function App() {
 
   return (
     <>
-   <VideoFeed/>
+   <FaceTracking/>
     </>
   )
 }
