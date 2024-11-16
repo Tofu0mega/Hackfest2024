@@ -1,0 +1,24 @@
+/* ProductListing.css */
+.scroller-container {
+    overflow: hidden; /* Hide anything outside the container */
+    padding-left: 10%;
+    padding-right: 10%; /* Add space around the scrollable area */
+  }
+  
+  .horizontal-scroller {
+    
+    display: flex;
+    overflow-x: auto; /* Enable horizontal scrolling */
+    scroll-behavior: smooth; /* Smooth scrolling */
+  }
+  
+  .horizontal-scroller::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+  }
+  
+  .card {
+    flex: 0 0 auto; /* Prevent cards from stretching */
+    width: 200px; /* Set a fixed width for each card */
+    margin-right: 3%; /* Add space between cards */
+  }
+  

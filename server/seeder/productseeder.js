@@ -8,7 +8,7 @@ dotenv.config(); // Load environment variables from .env file
 const seedProducts = async () => {
     try {
         // Connect to the MongoDB database
-        await mongoose.connect(process.env.MongoDB_URI, {
+        await mongoose.connect("mongodb://localhost:27017/VCR", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
@@ -43,7 +43,7 @@ const seedProducts = async () => {
                 stockQuantity: getRandomNumber(1, 100),
                 displayImage: `productImage${i}`,
                 filterImage: `filterImage${i}`,
-                itemDescription: generateRandomDescription(50) // Generates a 50-character gibberish description
+                description: generateRandomDescription(50) // Generates a 50-character gibberish description
             };
             products.push(product);
         }

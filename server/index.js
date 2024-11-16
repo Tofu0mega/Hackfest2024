@@ -29,7 +29,7 @@ app.use(cors({
 }));
 
 //API creation
-app.use("",router)
+app.use(router)
 app.get("/",(req,res)=>{
     res.send("Express app running")
 })
