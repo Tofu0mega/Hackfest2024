@@ -1,0 +1,27 @@
+.trycategory-banner{
+    display:block;
+    margin: 30px auto;
+    width:82%;
+}
+.trycategory-indexSort{
+    display:flex;
+    margin:0px 170px;
+    justify-content:space-between;
+    align-items:center;
+}
+.trycategory-sort{
+    padding:10px 20px;
+    border-radius:40px;
+    border:1px solid #888;
+}
+.trycategory-indexSort p span{
+    font-weight:600;
+
+}
+.trycategory-products{
+    margin:20px 170px;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    row-gap:80px;
+
+}
