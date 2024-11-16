@@ -7,9 +7,8 @@ const FaceTracking = () => {
   const canvasRef = useRef(null);
   const [status, setStatus] = useState("Starting...");
   const [fps, setFps] = useState(0);
-  const [AssetURL, setAssetURL] = useState(
-    'https://w7.pngwing.com/pngs/498/616/png-transparent-gold-colored-chunky-necklace-jewellery-gold-necklace-pendant-gold-necklace-queen-gemstone-leave-the-material-ring-thumbnail.png'
-  ); // Necklace Image URL
+  const [assetURL] = useState("https://res.cloudinary.com/dtauaal8p/image/upload/v1731731833/5AM/png-transparent-gold-colored-chunky-necklace-jewellery-gold-necklace-pendant-gold-necklace-queen-gemstone-leave-the-material-ring-thumbnail_ffc20x.png"); // Replace with your necklace image path
+  const necklaceImageRef = useRef(null);
 
   useEffect(() => {
     let model = null;
@@ -87,44 +86,35 @@ const FaceTracking = () => {
     };
 
     const drawNecklace = (ctx, chin, leftJaw, rightJaw) => {
-      // Calculate the midpoint of the jawline
+      if (!necklaceImageRef.current) return;
+      const necklaceImage = necklaceImageRef.current;
+    
+      // Calculate the midpoint between the left and right jaw points
       const midPoint = {
         x: (leftJaw.x + rightJaw.x) / 2,
         y: (leftJaw.y + rightJaw.y) / 2,
       };
-
-      // Calculate the distance between the jaw points (width of the neck)
-      const neckWidth = Math.abs(leftJaw.x - rightJaw.x);
-      const scale = neckWidth / 200; // Scale based on neck width, adjust the denominator for better size
-
-      // Adjust the vertical offset to position the necklace closer to the neck
-      const neckY = chin.y + 60; // Lower value moves the necklace closer
-
-      const image = new Image();
-      image.src = AssetURL;
-
-      // Wait for the image to load
-      image.onload = () => {
-        // Draw the necklace at the correct position, scaled and rotated
-        ctx.save();
-        
-        // Translate the context to the midpoint of the jawline
-        ctx.translate(midPoint.x, neckY);
-        
-        // Rotate the necklace based on the angle between the left and right jaw
-        const angle = Math.atan2(rightJaw.y - leftJaw.y, rightJaw.x - leftJaw.x);
-        ctx.rotate(angle); 
-
-        // Apply scaling based on the neck width
-        ctx.scale(scale, scale);
-
-        // Draw the necklace, centered on the midpoint
-        ctx.drawImage(image, -image.width / 2, -image.height / 2);
-
-        // Restore the context to its original state
-        ctx.restore();
-      };
+    
+      // Determine size and position for the necklace
+      let width = Math.abs(leftJaw.x - rightJaw.x); // Width of the necklace
+      let height = width / 2; // Aspect ratio for the necklace (adjustable)
+    
+      // Scale width and height by 1.5x
+      width *= 1.5;
+      height *= 1.5;
+    
+      const neckY = chin.y + 30; // Offset from chin for positioning the necklace
+    
+      // Draw the necklace image at the calculated position
+      ctx.drawImage(
+        necklaceImage,
+        canvasRef.current.width - midPoint.x - width / 2, // Mirrored x-coordinate for left-right symmetry
+        neckY,
+        width,
+        height
+      );
     };
+    
 
     const detectFaces = async (timestamp) => {
       if (!model || !videoRef.current || !canvasRef.current) return;
@@ -141,7 +131,7 @@ const FaceTracking = () => {
         ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
 
         ctx.save();
-        ctx.scale(-1, 1); // Flip horizontally to mirror video
+        ctx.scale(-1, 1);
         ctx.translate(-canvasRef.current.width, 0);
         ctx.drawImage(videoRef.current, 0, 0);
         ctx.restore();
@@ -162,7 +152,6 @@ const FaceTracking = () => {
             const rightJaw = face.keypoints[rightJawIndex];
 
             if (chin && leftJaw && rightJaw) {
-              // Draw the necklace
               drawNecklace(ctx, chin, leftJaw, rightJaw);
             }
 
@@ -199,7 +188,7 @@ const FaceTracking = () => {
         videoRef.current.srcObject.getTracks().forEach((track) => track.stop());
       }
     };
-  }, [AssetURL]);
+  }, []);
 
   return (
     <div className="relative">
@@ -218,7 +207,7 @@ const FaceTracking = () => {
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            transform: "scaleX(-1)", // Mirror the video
+            transform: "scaleX(-1)",
           }}
           playsInline
         />
@@ -245,9 +234,14 @@ const FaceTracking = () => {
       >
         <p>{status}</p>
       </div>
+      <img
+        ref={necklaceImageRef}
+        src={assetURL}
+        alt="Necklace"
+        style={{ display: "none" }} // Hide the image element (used for drawing)
+      />
     </div>
   );
 };
 
 export default FaceTracking;
-
