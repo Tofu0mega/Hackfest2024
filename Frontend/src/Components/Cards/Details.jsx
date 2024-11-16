@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 function Details() {
-  // Example product data
-  const product = {
-    id: 1,
-    category: "Sunglasses",
-    productName: "Ray-Ban Justin",
-    description: "Ray-Ban Justin Sunglasses may just be one of the coolest looks in the Ray-Ban collection.",
-    currentPrice: 1200.0,
-    originalPrice: 1500.0,
-    discount: 20,
-    imageUrl: "https://via.placeholder.com/400x300?text=Ray-Ban+Justin", // Replace with actual image URL
-  };
-
+  const [product, setProduct] = useState(null); // Use state to store the product data
   const navigate = useNavigate(); // For navigation
-  const { id } = useParams(); // Extract product ID from route params
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/product/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched data:", data); // Log the fetched data
+        setProduct(data); // Update state with fetched data
+      })
+      .catch((error) => {
+        console.error("Error fetching product data:", error);
+      });
+  }, [id]);
 
   // Function to handle Try Now button click
   const handleTryNow = () => {
-    navigate(`/try-on/${product.id}`, { state: { imageUrl: product.imageUrl } });
+    if (product) {
+      navigate(`/try-on/${product._id}`, { state: { imageUrl: product.imageUrl } });
+    }
   };
+
+  // Render loading state while fetching product data
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div
@@ -47,8 +55,8 @@ function Details() {
         }}
       >
         <img
-          src={product.imageUrl}
-          alt={product.productName}
+          src={product.displayImage}
+          alt={product.itemName}
           style={{
             maxWidth: '100%',
             maxHeight: '500px',
@@ -71,7 +79,7 @@ function Details() {
         }}
       >
         <h1 style={{ marginBottom: '20px', color: '#212529', fontSize: '32px', fontWeight: 'bold' }}>
-          {product.productName}
+          {product.itemName}
         </h1>
         <p
           style={{
@@ -84,7 +92,7 @@ function Details() {
           {product.description}
         </p>
         <p style={{ fontWeight: 'bold', color: '#343a40', fontSize: '24px', marginBottom: '15px' }}>
-          Rs. {product.currentPrice.toFixed(2)}{' '}
+          Rs. {product.itemPrice.toFixed(2)}
           <span
             style={{
               textDecoration: 'line-through',
@@ -93,11 +101,8 @@ function Details() {
               marginLeft: '10px',
             }}
           >
-            Rs. {product.originalPrice.toFixed(2)}
+            Rs. {product.itemPrice.toFixed(2)}
           </span>
-        </p>
-        <p style={{ color: '#28a745', fontWeight: 'bold', fontSize: '20px', marginBottom: '40px' }}>
-          Discount: {product.discount}%
         </p>
 
         {/* Action Buttons */}
@@ -134,5 +139,3 @@ const modernButtonStyle = (backgroundColor) => ({
 });
 
 export default Details;
-
-

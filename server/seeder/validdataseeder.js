@@ -196,8 +196,8 @@ const seedProducts = async () => {
       itemSize: "Large",
       itemPrice: 529.99,
       stockQuantity: 30,
-      displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731778697/5AM/Necklaces/asdsdasgdagsda_dpzzqd.png",
-      filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731778697/5AM/Necklaces/asdsdasgdagsda_dpzzqd.png",
+      displayImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731778701/5AM/Necklaces/asgasdgasgdagsd_bebflf.png",
+      filterImage: "https://res.cloudinary.com/dtauaal8p/image/upload/v1731778701/5AM/Necklaces/asgasdgasgdagsd_bebflf.png",
       description: "Richly crafted gold necklace featuring intricate peacock motifs and red gem embellishments. A bold accessory for cultural or traditional ceremonies."
     },
     {

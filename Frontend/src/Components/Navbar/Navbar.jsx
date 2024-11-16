@@ -20,7 +20,7 @@ const Navbar = () => {
       {/* Navigation Menu */}
       <ul className={`nav-menu ${menuOpen ? "show" : ""}`}>
         <li>
-          <Link to="/virtualChangingRoom" onClick={() => setMenuOpen(false)}>
+          <Link to="/" onClick={() => setMenuOpen(false)}>
             Virtual Changing Room
           </Link>
         </li>

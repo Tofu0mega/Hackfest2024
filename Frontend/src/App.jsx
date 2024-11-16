@@ -12,9 +12,11 @@ import earrings_banner from "../src/Components/assets/Frontend_Assets/Banner-Ear
 import necklace_banner from "../src/Components/assets/Frontend_Assets/Banner-Necklace.png"
 import LoginSignup from "./Pages/LoginSignup.jsx";
 import ProductListing from "./Product/product.jsx";
+import Details from "./components/Cards/Details.jsx";
 
 
 function App() {
+  
 
   return(
   <>
@@ -23,11 +25,12 @@ function App() {
       <BrowserRouter>
       <Navbar/>
       <Routes>
-        <Route path="/" element={<VirtualChangingRoom/>}/>
-        <Route path="/virtualChangingRoom" element={<TryCategory banner={homepage_banner} category="virtualChangingRoom" />}/>
+        <Route path="/" element={<TryCategory banner={homepage_banner} category="virtualChangingRoom" />}/>
+
         <Route path="/Sunglasses" element={<TryCategory banner={sunglass_banner} category="Sunglasses" />}/>
         <Route path="/Earrings" element={<TryCategory banner={earrings_banner} category="Earrings"/>}/>
         <Route path="/Necklace" element={<TryCategory banner={necklace_banner} category="Necklace"/>}/>
+        <Route path="/details/:id" element={<Details/>}/>
         
         <Route path="/product" element={<Product/>}>
           <Route path=":productId" element={<Product/>}/>
@@ -36,7 +39,7 @@ function App() {
         <Route path="/login" element={<LoginSignup/>}/>
 
       </Routes>
-      <ProductListing/>
+     
     
       <Footer/>
       </BrowserRouter>

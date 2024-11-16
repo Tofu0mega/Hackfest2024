@@ -33,7 +33,7 @@ export async function getAll(req, res) {
 export async function getById(req,res){
     try {
         const {id}=req.params
-        const result=await Product.findById(id).lean()
+        const result=await Product.findById(id)
         res.status(200).json(result)
     } catch (error) {
         console.log(error);

@@ -1,25 +1,39 @@
 import React, { useEffect, useState } from "react";
 import Card from "../Components/Cards/Card";
 import "./ProductListing.css";
+import { useLocation } from "react-router-dom";
 
 const ProductListing = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const location = useLocation();
+  let fetchurl;
+
+  if (location.pathname === "/") {
+    fetchurl = "http://localhost:3000/product";
+  } else {
+    fetchurl = `http://localhost:3000/product/searchbytype${location.pathname}`;
+  }
 
   useEffect(() => {
     // Fetch product data from backend
-    fetch("http://localhost:3000/product")
+    fetch(fetchurl)
       .then((response) => response.json())
       .then((data) => {
         console.log("Fetched data:", data); // Log the fetched data
-        setProducts(data.slice(0, 10)); // Set the state with the top 10 products
+        
+        // Randomize order of fetched data
+        const randomizedData = data.sort(() => Math.random() - 0.5);
+        
+        // Set state with the top 10 products
+        setProducts(randomizedData.slice(0, 10));
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching product data:", error);
         setLoading(false);
       });
-  }, []);
+  }, [fetchurl]);
 
   if (loading) return <p>Loading products...</p>;
   if (products.length === 0) return <p>No products available.</p>;

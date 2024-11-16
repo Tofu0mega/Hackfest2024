@@ -6,14 +6,9 @@ import DisplayCard from '../Components/DisplayCards/DisplayCards.jsx'
 
 const VirtualChangingRoom = () => {
   return (
-    // <div>
-    <>
-        {/* <Hero/> */}
+   
         <DisplayCard/>
-    </>
-    //     <Popular/>
-    //     <Collection/>
-    //     </div>
+   
         
   )
 }
