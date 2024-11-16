@@ -1,9 +1,10 @@
 import express from "express"
-import * as userController from "../controllers/user.js"
+
+import * as user from "../controllers/user.js"
 
 const router=express.Router()
 
-router.get("/:id",userController.getById)
-router.get("/update/:id",userController.updateById)
+router.get("/:id",user.getuser)
+
 
 export default router

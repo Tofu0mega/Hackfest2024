@@ -1,6 +1,7 @@
 
 import Product from "../models/product.js"
 import { uploadImage } from "../middleware/uploadpng.js"
+import User from "../models/user.js"
 
 export async function create(req,res){
     try {
@@ -63,3 +64,73 @@ export async function getByName(req, res) {
 }
 
 
+export const addToCart = async (req, res) => {
+    try {
+      const { userId, productId } = req.body;
+  
+      // Validate userId and productId
+      if (!userId || !productId) {
+        return res.status(400).json({ message: 'User ID and Product ID are required' });
+      }
+  
+      // Find the user by ID
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Check if the product exists
+      const product = await Product.findById(productId);
+      if (!product) {
+        return res.status(404).json({ message: 'Product not found' });
+      }
+  
+      // Check if the product is already in the cart
+      const productExists = user.cart.some(item => item.equals(productId));
+      if (productExists) {
+        return res.status(400).json({ message: 'Product already in cart' });
+      }
+  
+      // Add product to user's cart
+      user.cart.push(productId);
+      await user.save();
+  
+      return res.status(200).json({ message: 'Product added to cart', cart: user.cart });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  };
+  
+  // Controller to remove a product from the user's cart
+  export const removeFromCart = async (req, res) => {
+    try {
+      const { userId, productId } = req.body;
+  
+      // Validate userId and productId
+      if (!userId || !productId) {
+        return res.status(400).json({ message: 'User ID and Product ID are required' });
+      }
+  
+      // Find the user by ID
+      const user = await User.findById(userId);
+      if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+      }
+  
+      // Check if the product is in the cart
+      const productIndex = user.cart.findIndex(item => item.equals(productId));
+      if (productIndex === -1) {
+        return res.status(400).json({ message: 'Product not in cart' });
+      }
+  
+      // Remove product from the cart
+      user.cart.splice(productIndex, 1);
+      await user.save();
+  
+      return res.status(200).json({ message: 'Product removed from cart', cart: user.cart });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  };

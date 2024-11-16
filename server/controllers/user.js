@@ -1,35 +1,17 @@
-import user from "../models/user.js"
+import User from "../models/user.js";
 
-export async function getById(req,res){
-    try{
-        const{id}=req.params
-        const result=(await user.findById(id)).toObject()
-        res.status(200).json(result)
+export async function getuser(req, res) {
+  
+    const existingUser = await User.findById(req.params.id ).lean();
+  
+    if (existingUser) {
+        const {password,...safedata}=existingUser
+     
+      res.status(200).json(safedata);
+      
+    } else {
+      return res.status(404).json({ message: "User not found" });
     }
-    catch (error){
-        console.log(error);
-        res.status(500).json
-        ({
-            message:"Error getting your details,please try again"
-        })
-    }
-
-}
-
- export async function updateById(req,res){
-    try{
-        const{id}=req.params
-        const updated=await User.findByIdAndUpdate(id,req.body,{new:true}).toObject()
-        delete updated.password
-        res.status(200).json(updated)
-    }
-    catch (error){
-        console.log(error);
-        res.status(500).json
-        ({
-            message:"Error getting your details,please try again"
-        })
-    }
+  }
 
 
-}
