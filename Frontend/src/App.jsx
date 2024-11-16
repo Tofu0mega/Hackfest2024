@@ -4,12 +4,13 @@ import {BrowserRouter,Routes,Route} from "react-router-dom";
 import Try from "./Pages/Try";
 import ShopCategory from "./Pages/TryCategory";
 import Product from "./Pages/Product";
-import LoginSignup from "./Pages/LoginSignup.jsx"
 import Cart from "./Pages/Cart";
 import Footer from "./Components/Footers/Footer.jsx";
 import sunglass_banner from "../src/Components/assets/Frontend_Assets/Banner-Sunglass.png"
 import earrings_banner from "../src/Components/assets/Frontend_Assets/Banner-Earrings.png"
 import necklace_banner from "../src/Components/assets/Frontend_Assets/Banner-Necklace.png"
+import LoginSignup from "./Pages/LoginSignup.jsx"
+
 
 
 
@@ -46,5 +47,4 @@ function App() {
   
 }
 
-export default App;
 export default App;
