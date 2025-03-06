@@ -3,8 +3,8 @@
 
 
 
-## 👨‍💻 Virtual Changing Room
-This project is a **Virtual Changing Room** developed for Hackfest2024. It provides a digital solution that allows customers to try on glasses, earrings and necklaces virtually. Using Augmented Reality (AR), users can view how different accessories would look on them, enhancing the online shopping experience and reducing the uncertainty of accessories online.
+## 👨‍💻 Try IT ON
+This project is a **Try It ON** developed for Hackfest2024. It provides a digital solution that allows customers to try on glasses, earrings and necklaces virtually. Using Augmented Reality (AR), users can view how different accessories would look on them, enhancing the online shopping experience and reducing the uncertainty of accessories online.
 
   
 ## 🛠️ Technologies Used
